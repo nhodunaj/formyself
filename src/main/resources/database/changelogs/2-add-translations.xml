@@ -1,0 +1,39 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+                      
+                      
+    <changeSet id="2-create-table-language" author="nhodunaj">
+        <sql>
+            CREATE TABLE language(
+                id serial PRIMARY KEY NOT NULL,
+                name varchar(31),
+                shortName varchar(2)
+            );
+        </sql>
+    </changeSet>
+    
+     <changeSet id="2-create-table-word" author="nhodunaj">
+        <sql>
+            CREATE TABLE word(
+                id serial PRIMARY KEY NOT NULL,
+                main_language_id int REFERENCES language(id) NOT NULL,
+                word varchar(255) NOT NULL UNIQUE
+            );
+        </sql>
+    </changeSet>
+    
+    <changeSet id="2-create-table-translation" author="nhodunaj">
+        <sql>
+            CREATE TABLE translation(
+                id serial PRIMARY KEY NOT NULL,
+                language_id int REFERENCES language(id) NOT NULL,
+                word_id int REFERENCES word(id) NOT NULL,
+                translation varchar(255) NOT NULL
+            );
+        </sql>
+    </changeSet>
+    
+</databaseChangeLog>
